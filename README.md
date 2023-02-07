@@ -25,7 +25,7 @@ The local system must allocate a local kubernetes (VM) of sorts with basic acces
 
 The CI/CD pipeline will be automatically triggered by a Git commit to the main branch on the hosted repository. The local agent/runner on the same system will then access the local kubernetes whenever one of its action is being executed.
 
-![Life cycle](./images/DevOps-WiSe2022@2x.png "Life cycle")
+![Life cycle](./images/DevOps-WiSe2022.png "Life cycle")
 
 ### Technologies & Platforms
 
