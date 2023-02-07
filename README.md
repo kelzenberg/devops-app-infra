@@ -13,6 +13,10 @@ After the initial deployment, the deployed code must remain updatable and the co
 
 The hosted platform must offer a list of features to enable local deployments, such as but not only: repositories, actions, container registries and local agents/runners.
 
+### Environments
+
+- K8s namespace `production` and `staging`
+
 ### Life Cycle
 
 _(Visualization of the entire life cycle below)_
