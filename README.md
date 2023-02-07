@@ -6,9 +6,10 @@ For the concept of this infrastructure, see [Concept.md](./Concept.md).
 
 ## Requirements
 
-- **Hypervisor**: VirtualBox
+- **Hypervisor**: [VirtualBox v6.1.38](https://www.virtualbox.org/wiki/Download_Old_Builds_6_1)  
+  <sub>(higher versions seem to be incompatible with minikube on MacOS 11.7.2)</sub>
   ```sh
-  brew install --cask virtualbox
+  brew install --cask virtualbox@6.1.38
   ```
 - **Kubernets Command Line Tool**: kubectl
   ```sh
@@ -20,5 +21,5 @@ For the concept of this infrastructure, see [Concept.md](./Concept.md).
   ```
 - **Kubernetes Package Manager**: Helm
   ```sh
-  brew install kubernetes-helm
+  brew install helm
   ```
