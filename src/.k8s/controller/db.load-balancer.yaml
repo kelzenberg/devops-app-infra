@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: database-load-balancer
+  labels:
+    name: database-load-balancer
+    group: controller
+spec:
+  type: LoadBalancer
+  selector:
+    app: postgres
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: 5432
+      protocol: TCP
