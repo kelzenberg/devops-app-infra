@@ -6,7 +6,7 @@ Work in progress tasks & To-Do's
 - [x] setup Minikube & components
 - [ ] create Makefile to bootstrap local k8s
 - [ ] configure Minikube via helm
-- [ ]
+- [ ] make `minikube ip` accessible from the outside (via ingress?)
 - [ ]
 - [ ] renew Github tokens
 - [ ] register Github local agent
