@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: database-config
+  labels:
+    name: database-config
+    group: db
+data:
+  POSTGRES_DB: devops
+  POSTGRES_USER: post
+  POSTGRES_PASSWORD: gresql

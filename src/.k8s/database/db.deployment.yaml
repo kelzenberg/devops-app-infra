@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database
+  labels:
+    name: database
+    app: postgres
+    group: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+        type: db
+    spec:
+      volumes:
+        - name: database-pvc
+          persistentVolumeClaim:
+            claimName: database-pvc
+      containers:
+        - name: postgres
+          image: postgres:15.1
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: database-config
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: database-pvc
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
