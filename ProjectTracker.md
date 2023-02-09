@@ -10,7 +10,25 @@ Work in progress tasks & To-Do's
 - [ ] _**WIP**_ use ghcr.io as image registry within minikube
 - [ ]
 - [ ]
-- [ ] create Github actions (test, build, push-to-ghcr)
-- [ ] renew Github tokens
+- [ ] Environments:
+  - [ ] Staging
+  - [ ] Production
+    - [ ] manual review/release required for `production` env release
+- [x] CI is only triggered through a change in the VCS
+- [ ] create min. 3 Github actions in CI/CD workflow
+  - [ ] build (Node)
+  - [ ] test (Node)
+  - [x] build-and-push (Docker & GHCR)
+- [x] fix Github workflow tokens
+- [x] at least one service (e.g. VCS, Monitoring) other than the app has to be provisioned by yourself  
+       --> Database
+- [ ] create new Github token for local agent
 - [ ] register Github local agent
 - [ ]
+- [ ] relevant services (VCS, CI/CD, App, Monitoring) accessible via FQDN
+- [ ] exposed services served via HTTPS
+- [ ] application must run 100% redundant (replica: 2+)
+- [ ] zero-downtime deployment strategy
+- [ ]
+- [ ]
+- [ ] cleanup READMEs
