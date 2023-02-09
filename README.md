@@ -19,7 +19,12 @@ For the concept of this infrastructure, see [Concept.md](./Concept.md).
   ```sh
   brew install minikube
   ```
-- **Kubernetes Package Manager**: Helm
-  ```sh
-  brew install helm
-  ```
+  <!-- - **Kubernetes Package Manager**: Helm
+    ```sh
+    brew install helm
+    ```
+- **Declarative helm charts**: Helmfile
+  ````sh
+  brew install helmfile
+  ``` -->
+  ````
