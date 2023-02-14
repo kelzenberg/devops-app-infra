@@ -13,17 +13,18 @@ Work in progress tasks & To-Do's
 - [ ] Environments:
   - [ ] Staging
   - [ ] Production
-    - [ ] manual review/release required for `production` env release
+    - [x] manual review/release required for `production` env release
 - [x] CI is only triggered through a change in the VCS
-- [ ] create min. 3 Github actions in CI/CD workflow
-  - [ ] build (Node)
-  - [ ] test (Node)
+- [x] create min. 3 Github actions in CI/CD workflow
+  - [x] build (Node)
+  - [x] test (Node)
   - [x] build-and-push (Docker & GHCR)
 - [x] fix Github workflow tokens
 - [x] at least one service (e.g. VCS, Monitoring) other than the app has to be provisioned by yourself  
        --> Database
 - [ ] create new Github token for local agent
 - [ ] register Github local agent
+- [ ] inject `API_KEY_*` into deployment
 - [ ]
 - [ ] relevant services (VCS, CI/CD, App, Monitoring) accessible via FQDN
 - [ ] exposed services served via HTTPS
