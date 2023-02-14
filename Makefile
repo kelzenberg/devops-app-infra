@@ -52,3 +52,17 @@ controller:
 	kubectl get ingress
 	kubectl apply -f ./src/.k8s/controller/db.load-balancer.yaml
 	kubectl get services
+
+github-runner-install:
+	$ mkdir ./src/.github && cd ./src/.github
+	$ curl -o actions-runner-osx-x64-2.301.1.tar.gz -L https://github.com/actions/runner/releases/download/v2.301.1/actions-runner-osx-x64-2.301.1.tar.gz
+	$ echo "3e0b037ea67e9626e99e6d3ff803ce0d8cc913938ddd1948b3a410ac6a75b878  actions-runner-osx-x64-2.301.1.tar.gz" | shasum -a 256 -c
+	$ tar xzf ./actions-runner-osx-x64-2.301.1.tar.gz
+
+	# Supply GitHub Token via CLI argument, e.g. `make github-runner-install RUNNER_TOKEN=foo`
+	$ ./config.sh --url https://github.com/kelzenberg/devops-app --token $(RUNNER_TOKEN)
+
+github-runner-start:
+	$ ./src/.github/run.sh
+	# Use this YAML in your workflow file for each job:
+	# `runs-on: self-hosted`

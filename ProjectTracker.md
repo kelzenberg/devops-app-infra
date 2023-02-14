@@ -24,6 +24,7 @@ Work in progress tasks & To-Do's
        --> Database
 - [ ] create new Github token for local agent
 - [ ] register Github local agent
+- [ ] document on how to add a self-hosted runner for this project
 - [ ] inject `API_KEY_*` into deployment
 - [ ]
 - [ ] relevant services (VCS, CI/CD, App, Monitoring) accessible via FQDN
