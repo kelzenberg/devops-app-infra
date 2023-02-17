@@ -6,7 +6,7 @@ Work in progress tasks & To-Do's
 - [x] setup Minikube & components
 - [ ] _**WIP**_ create Makefile to bootstrap local k8s
 - [ ] _**WIP**_ configure Minikube's k8s via config files
-- [ ] use `minikube ip` IPs dynamically in k8s config files
+- [ ] configure `minikube ip` IPs to be static on host & use in ingress etc.
 - [ ] _**WIP**_ use ghcr.io as image registry within minikube
 - [ ]
 - [ ]
@@ -14,6 +14,7 @@ Work in progress tasks & To-Do's
   - [ ] Staging
   - [ ] Production
     - [x] manual review/release required for `production` env release
+    - [ ] document what restrictions branches have
 - [x] CI is only triggered through a change in the VCS
 - [x] create min. 3 Github actions in CI/CD workflow
   - [x] build (Node)
@@ -22,15 +23,16 @@ Work in progress tasks & To-Do's
 - [x] fix Github workflow tokens
 - [x] at least one service (e.g. VCS, Monitoring) other than the app has to be provisioned by yourself  
        --> Database
-- [ ] create new Github token for local agent
-- [ ] register Github local agent
+- [x] register Github local agent
+  - [ ] pull-secret for ghcr.io as kind: secret
 - [ ] document on how to add a self-hosted runner for this project
-- [ ] inject `API_KEY_*` into deployment
+- [ ] inject `API_KEY_*` into deployments
 - [ ]
 - [ ] relevant services (VCS, CI/CD, App, Monitoring) accessible via FQDN
-- [ ] exposed services served via HTTPS
+- [ ] exposed services served via HTTPS (self-signed -> k8s secrets -> ingress)
 - [ ] application must run 100% redundant (replica: 2+)
 - [ ] zero-downtime deployment strategy
+  - [ ] configurable in `kind: deployment`
 - [ ]
 - [ ]
 - [ ] cleanup READMEs
