@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-app
+  labels:
+    name: devops-app
+    app: node
+    group: app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: node
+  template:
+    metadata:
+      labels:
+        app: node
+        group: app
+        type: app
+    spec:
+      imagePullSecrets:
+        - name: dpr-secret
+      containers:
+        - name: devops-app
+          image: ghcr.io/kelzenberg/devops-app:master
+          imagePullPolicy: IfNotPresent
+          command: [node]
+          args: ["dist/index.js"]
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: app-config
+            - configMapRef:
+                name: database-config
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64M
+            limits:
+              cpu: 100m
+              memory: 128M
