@@ -45,6 +45,7 @@ db:
 
 app:
 	kubectl apply -f ./src/.k8s/app/app.config.yaml
+	kubectl apply -f ./src/.k8s/app/migration.config.yaml
 	kubectl apply -f ./src/.k8s/app/app.deployment.yaml
 	kubectl apply -f ./src/.k8s/app/app.service.yaml
 	kubectl apply -f ./src/.k8s/controller/ingress.yaml

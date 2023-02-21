@@ -20,6 +20,28 @@ spec:
     spec:
       imagePullSecrets:
         - name: dpr-secret
+      initContainers:
+        - name: database-migration
+          image: ghcr.io/kelzenberg/devops-app:master
+          imagePullPolicy: Always
+          command: [/flyway/flyway]
+          args:
+            [
+              "-connectRetries=60",
+              "-locations=filesystem:/flyway/sql",
+              "migrate",
+            ]
+          envFrom:
+            - configMapRef:
+                name: database-config
+            - configMapRef:
+                name: migration-config
+          resources:
+            requests:
+              cpu: 20m
+              memory: 64M
+            limits:
+              memory: 128M
       containers:
         - name: devops-app
           image: ghcr.io/kelzenberg/devops-app:master

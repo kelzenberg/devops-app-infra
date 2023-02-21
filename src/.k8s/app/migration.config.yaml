@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: migration-config
+  labels:
+    name: migration-config
+    group: app
+data:
+  FLYWAY_URL: jdbc:postgresql://database-service.default.svc.cluster.local:5432/devops
+  FLYWAY_USER: post # TODO: ideally use this from db.config.yaml
+  FLYWAY_PASSWORD: gresql
