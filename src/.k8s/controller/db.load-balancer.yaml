@@ -10,7 +10,7 @@ spec:
   selector:
     app: postgres
   ports:
-    - name: postgres
+    - name: postgres-loadbalancer
       port: 5432
-      targetPort: 5432
+      targetPort: pg-svc
       protocol: TCP

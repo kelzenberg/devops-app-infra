@@ -26,7 +26,9 @@ spec:
         - name: postgres
           image: postgres:15.1 # TODO: check if this is changeable via kubectl args
           ports:
-            - containerPort: 5432
+            - name: pg-deploy
+              containerPort: 5432
+              protocol: TCP
           envFrom:
             - configMapRef:
                 name: database-config

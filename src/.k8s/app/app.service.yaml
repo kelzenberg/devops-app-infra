@@ -10,7 +10,7 @@ spec:
   selector:
     app: node
   ports:
-    - name: http
+    - name: app-svc
       port: 8080
-      targetPort: http
+      targetPort: app-deploy
       protocol: TCP

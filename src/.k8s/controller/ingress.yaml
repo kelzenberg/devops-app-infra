@@ -18,4 +18,4 @@ spec:
               service:
                 name: app-service
                 port:
-                  name: http
+                  name: app-svc

@@ -27,7 +27,7 @@ spec:
           command: [node]
           args: ["dist/index.js"]
           ports:
-            - name: http
+            - name: app-deploy
               containerPort: 3000
               protocol: TCP
           envFrom:
