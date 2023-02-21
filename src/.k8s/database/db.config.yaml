@@ -8,4 +8,4 @@ metadata:
 data:
   POSTGRES_DB: devops
   POSTGRES_USER: post
-  POSTGRES_PASSWORD: gresql
+  POSTGRES_PASSWORD: gresql # TODO: injection of secrets (e.g. as k8s secret + kubectl --environment=DB_PW:)

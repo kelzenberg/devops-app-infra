@@ -24,7 +24,7 @@ spec:
             claimName: database-pvc
       containers:
         - name: postgres
-          image: postgres:15.1
+          image: postgres:15.1 # TODO: check if this is changeable via kubectl args
           ports:
             - containerPort: 5432
           envFrom:
