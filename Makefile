@@ -1,9 +1,15 @@
 # Makefile to bootstrap local kubernetes
 
 init:
-	minikube start
+	minikube start --cpus 2 --memory 4g
 	minikube addons enable metrics-server
 	minikube addons enable ingress
+	minikube addons configure registry-creds
+	minikube addons enable registry-creds
+	kubectl cluster-info
+
+start:
+	minikube start
 	kubectl cluster-info
 
 tunnel:
@@ -13,15 +19,15 @@ dashboard:
 	minikube dashboard
 
 status:
-	kubectl get deployments --all
-	kubectl get services --all
-	kubectl get pods --all
-	kubectl get daemonset --all
-	kubectl get pvc --all
-	kubectl get ingress --all
-	kubectl get configmaps --all
+	kubectl get deployments
+	kubectl get services
+	kubectl get pods
+	kubectl get daemonsets
+	kubectl get pvc
+	kubectl get ingress
+	kubectl get configmaps
 
-cleanup:
+clean:
 	kubectl delete deployments --all
 	kubectl delete services --all
 	kubectl delete pods --all
@@ -32,26 +38,18 @@ cleanup:
 
 db:
 	kubectl apply -f ./src/.k8s/database/db.pvc.yaml
-	kubectl get pvc
 	kubectl apply -f ./src/.k8s/database/db.config.yaml
-	kubectl get configmaps
 	kubectl apply -f ./src/.k8s/database/db.deployment.yaml
-	kubectl get deployments
-	kubectl get pods
 	kubectl apply -f ./src/.k8s/database/db.service.yaml
-	kubectl get services
+	kubectl apply -f ./src/.k8s/controller/db.load-balancer.yaml
 
 app:
+	kubectl apply -f ./src/.k8s/app/app.config.yaml
 	kubectl apply -f ./src/.k8s/app/app.deployment.yaml
-	kubectl get deployments
-	kubectl get services
-	kubectl get pods
-
-controller:
+	kubectl apply -f ./src/.k8s/app/app.service.yaml
 	kubectl apply -f ./src/.k8s/controller/ingress.yaml
-	kubectl get ingress
-	kubectl apply -f ./src/.k8s/controller/db.load-balancer.yaml
-	kubectl get services
+
+all: db app status
 
 github-runner-install:
 	$ mkdir ./src/.github && cd ./src/.github
