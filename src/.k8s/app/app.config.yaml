@@ -8,4 +8,5 @@ metadata:
 data:
   NODE_ENV: local
   API_KEY_DEV: ${API_KEY_DEV} # TODO: injections of secrets (e.g. as k8s secret + kubectl --environment=API_KEY:)
+  POSTGRES_HOST: database-service.default.svc.cluster.local:5432
   PG_LOGGING: "false"
