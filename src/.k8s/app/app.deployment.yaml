@@ -23,7 +23,7 @@ spec:
       containers:
         - name: devops-app
           image: ghcr.io/kelzenberg/devops-app:master
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           command: [node]
           args: ["dist/index.js"]
           ports:
