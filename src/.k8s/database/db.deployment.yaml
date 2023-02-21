@@ -15,6 +15,7 @@ spec:
     metadata:
       labels:
         app: postgres
+        group: db
         type: db
     spec:
       volumes:
@@ -33,6 +34,9 @@ spec:
             - mountPath: /var/lib/postgresql/data
               name: database-pvc
           resources:
+            requests:
+              cpu: 100m
+              memory: 64M
             limits:
-              memory: "128Mi"
-              cpu: "500m"
+              cpu: 100m
+              memory: 128M
