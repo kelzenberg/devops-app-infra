@@ -26,6 +26,7 @@ status:
 	kubectl get pvc
 	kubectl get ingress
 	kubectl get configmaps
+	kubectl get secrets
 
 clean:
 	kubectl delete deployments --all
@@ -35,8 +36,10 @@ clean:
 	kubectl delete pvc --all
 	kubectl delete ingress --all
 	kubectl delete configmaps --all
+	kubectl delete secrets --all
 
 db:
+	kubectl create secret generic database-secret --from-env-file=.env
 	kubectl apply -f ./src/.k8s/database/db.pvc.yaml
 	kubectl apply -f ./src/.k8s/database/db.config.yaml
 	kubectl apply -f ./src/.k8s/database/db.deployment.yaml
