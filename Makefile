@@ -39,7 +39,7 @@ clean:
 	kubectl delete secrets --all
 
 db:
-	kubectl create secret generic database-secret --from-env-file=.env
+	kubectl create secret generic database-secret --from-env-file=.env.db
 	kubectl apply -f ./src/.k8s/database/db.pvc.yaml
 	kubectl apply -f ./src/.k8s/database/db.config.yaml
 	kubectl apply -f ./src/.k8s/database/db.deployment.yaml
@@ -47,6 +47,7 @@ db:
 	kubectl apply -f ./src/.k8s/controller/db.load-balancer.yaml
 
 app:
+	kubectl create secret generic app-secret --from-env-file=.env.app
 	kubectl apply -f ./src/.k8s/app/app.config.yaml
 	kubectl apply -f ./src/.k8s/app/app.deployment.yaml
 	kubectl apply -f ./src/.k8s/app/app.service.yaml
