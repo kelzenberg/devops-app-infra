@@ -26,6 +26,14 @@ spec:
       imagePullSecrets:
         - name: dpr-secret
       initContainers:
+        - name: database-readiness
+          image: postgres:15.1
+          command: [
+              "sh",
+              "-c",
+              "until pg_isready -h database-service.default.svc.cluster.local -p 5432;
+              do echo waiting for database; sleep 2; done;",
+            ]
         - name: database-migration
           image: ghcr.io/kelzenberg/devops-app:master
           imagePullPolicy: Always
@@ -62,6 +70,18 @@ spec:
                 name: app-config
             - configMapRef:
                 name: database-config
+          livenessProbe:
+            httpGet:
+              path: /liveness
+              port: app-deploy
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /readiness
+              port: app-deploy
+            initialDelaySeconds: 10
+            periodSeconds: 10
           resources:
             requests:
               cpu: 100m
