@@ -8,6 +8,11 @@ metadata:
     group: db
 spec:
   replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   selector:
     matchLabels:
       app: postgres
@@ -24,7 +29,7 @@ spec:
             claimName: database-pvc
       containers:
         - name: postgres
-          image: postgres:15.1 # TODO: check if this is changeable via kubectl args
+          image: postgres:15.1
           ports:
             - name: pg-deploy
               containerPort: 5432
