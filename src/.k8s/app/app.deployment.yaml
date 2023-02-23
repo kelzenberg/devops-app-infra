@@ -47,8 +47,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: database-config
-            - configMapRef:
-                name: migration-config
+            - secretRef:
+                name: database-secret
           resources:
             requests:
               cpu: 20m
@@ -70,6 +70,8 @@ spec:
                 name: app-config
             - configMapRef:
                 name: database-config
+            - secretRef:
+                name: database-secret
           livenessProbe:
             httpGet:
               path: /liveness

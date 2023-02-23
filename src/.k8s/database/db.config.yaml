@@ -8,4 +8,5 @@ metadata:
 data:
   POSTGRES_DB: devops
   POSTGRES_USER: post
-  POSTGRES_PASSWORD: gresql # TODO: injection of secrets (e.g. as k8s secret + kubectl --environment=DB_PW:)
+  FLYWAY_USER: post
+  FLYWAY_URL: jdbc:postgresql://database-service.default.svc.cluster.local:5432/devops
