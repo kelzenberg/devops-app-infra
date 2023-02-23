@@ -35,8 +35,8 @@ Work in progress tasks & To-Do's
   - [ ] monitoring?
 - [ ] exposed services served via HTTPS (self-signed -> k8s secrets -> ingress)
 - [x] application must run 100% redundant (replica: 2+)
-- [ ] zero-downtime deployment strategy
-  - [ ] add rolling-update policy, configurable in `kind: deployment`
-- [ ]
+- [x] zero-downtime deployment strategy
+  - [x] add rolling-update policy, configurable in `kind: deployment`
+- [ ] add liveness & readiness probes to postgresql
 - [ ]
 - [ ] cleanup READMEs
