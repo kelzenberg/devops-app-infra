@@ -5,11 +5,10 @@ Work in progress tasks & To-Do's
 - [x] setup repositories ([app](https://github.com/kelzenberg/devops-app) & [infra](https://github.com/kelzenberg/devops-app-infra))
 - [x] setup Minikube & components
 - [ ] _**WIP**_ create Makefile to bootstrap local k8s
-- [ ] _**WIP**_ configure Minikube's k8s via config files
+- [ ] _**WIP**_ configure Minikube's k8s via config yaml files
 - [ ] configure `minikube ip` IPs to be static on host & use in ingress etc.
 - [x] use ghcr.io as image registry within minikube
   - [ ] document on how to add registry for minikube with `minikube addons configure registry-creds`
-- [ ]
 - [ ] Environments:
   - [ ] Staging
   - [ ] Production
@@ -26,8 +25,7 @@ Work in progress tasks & To-Do's
 - [x] register Github local agent
   - [ ] pull-secret for ghcr.io as kind: secret
 - [ ] document on how to add a self-hosted runner for this project
-- [ ] inject `API_KEY_*` and `DB_PASSWORD` into deployments
-- [ ]
+- [x] inject `API_KEY_*` and `DB_PASSWORD` into deployments
 - [ ] relevant services (VCS, CI/CD, App, Monitoring) accessible via FQDN
   - [x] VCS
   - [x] CI/CD
