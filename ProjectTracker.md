@@ -8,7 +8,7 @@ Work in progress tasks & To-Do's
 - [ ] _**WIP**_ configure Minikube's k8s via config yaml files
 - [ ] configure `minikube ip` IPs to be static on host & use in ingress etc.
 - [x] use ghcr.io as image registry within minikube
-  - [ ] document on how to add registry for minikube with `minikube addons configure registry-creds`
+  - [ ] document on how to add ghcr.io registry for minikube with `minikube addons configure registry-creds`
 - [ ] Environments:
   - [ ] Staging
   - [ ] Production
@@ -22,8 +22,8 @@ Work in progress tasks & To-Do's
 - [x] fix Github workflow tokens
 - [x] at least one service (e.g. VCS, Monitoring) other than the app has to be provisioned by yourself  
        --> Database
-- [x] register Github local agent
-  - [ ] pull-secret for ghcr.io as kind: secret
+- [x] register Github self-hosted runner
+  - [ ] describe requirements for GH runner (e.g. `kubectl` installed)
 - [ ] document on how to add a self-hosted runner for this project
 - [x] inject `API_KEY_*` and `DB_PASSWORD` into deployments
 - [ ] relevant services (VCS, CI/CD, App, Monitoring) accessible via FQDN
@@ -36,5 +36,5 @@ Work in progress tasks & To-Do's
 - [x] zero-downtime deployment strategy
   - [x] add rolling-update policy, configurable in `kind: deployment`
 - [ ] add liveness & readiness probes to postgresql
-- [ ]
+- [ ] add app request logging
 - [ ] cleanup READMEs
