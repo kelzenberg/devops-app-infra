@@ -1,7 +1,7 @@
 # Makefile to bootstrap local kubernetes
 
 init:
-	minikube start --cpus 2 --memory 4g
+	minikube start --cpus 2 --memory 4g --driver=docker
 	minikube addons enable metrics-server
 	minikube addons enable ingress
 	minikube addons configure registry-creds
