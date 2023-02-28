@@ -28,12 +28,21 @@ spec:
       initContainers:
         - name: database-readiness
           image: postgres:15.1
+          imagePullPolicy: IfNotPresent
           command: [
               "sh",
               "-c",
-              "until pg_isready -h database-service.default.svc.cluster.local -p 5432;
+              "until pg_isready -h database-service.$(K8S_NAMESPACE).svc.cluster.local -U $(POSTGRES_USER) -p 5432;
               do echo waiting for database; sleep 2; done;",
             ]
+          envFrom:
+            - configMapRef:
+                name: database-config
+          env:
+            - name: K8S_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
         - name: database-migration
           image: ghcr.io/kelzenberg/devops-app:master
           imagePullPolicy: Always
@@ -49,6 +58,15 @@ spec:
                 name: database-config
             - secretRef:
                 name: database-secret
+          env:
+            - name: K8S_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: FLYWAY_URL
+              value: jdbc:postgresql://database-service.$(K8S_NAMESPACE).svc.cluster.local:5432/$(POSTGRES_DB)
+            - name: FLYWAY_USER
+              value: $(POSTGRES_USER)
           resources:
             requests:
               cpu: 20m
@@ -74,17 +92,26 @@ spec:
                 name: database-config
             - secretRef:
                 name: database-secret
+          env:
+            - name: K8S_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POSTGRES_HOST
+              value: database-service.$(K8S_NAMESPACE).svc.cluster.local:5432
+            - name: NODE_ENV
+              value: $(K8S_NAMESPACE)
           livenessProbe:
             httpGet:
               path: /liveness
               port: app-deploy
-            initialDelaySeconds: 10
+            initialDelaySeconds: 5
             periodSeconds: 10
           readinessProbe:
             httpGet:
               path: /readiness
               port: app-deploy
-            initialDelaySeconds: 10
+            initialDelaySeconds: 5
             periodSeconds: 10
           resources:
             requests:
