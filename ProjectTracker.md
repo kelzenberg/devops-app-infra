@@ -6,12 +6,15 @@ Work in progress tasks & To-Do's
 - [x] setup Minikube & components
 - [ ] _**WIP**_ create Makefile to bootstrap local k8s
 - [ ] _**WIP**_ configure Minikube's k8s via config yaml files
-- [ ] configure `minikube ip` IPs to be static on host & use in ingress etc.
+- [ ] ~~configure `minikube ip` IPs to be static on host & use in ingress etc.~~
+  - Static IPs for Minikube are only possible with the docker driver
+  - Minikube remains its IP address with Virtualbox driver between sessions though
+  - [ ] document caveat of IP address with virtualbox & downsides of docker driver
 - [x] use ghcr.io as image registry within minikube
   - [ ] document on how to add ghcr.io registry for minikube with `minikube addons configure registry-creds`
 - [ ] Environments:
-  - [ ] Staging
-  - [ ] Production
+  - [x] Staging
+  - [x] Production
     - [x] manual review/release required for `production` env release
     - [ ] document what restrictions branches have
 - [x] CI is only triggered through a change in the VCS
@@ -21,9 +24,10 @@ Work in progress tasks & To-Do's
   - [x] build-and-push (Docker & GHCR)
 - [x] fix Github workflow tokens
 - [x] at least one service (e.g. VCS, Monitoring) other than the app has to be provisioned by yourself  
-       --> Database
+  - --> Database
 - [x] register Github self-hosted runner
   - [ ] describe requirements for GH runner (e.g. `kubectl` installed)
+  - [ ] describe CI-INFRA_REPO_TOKEN secret to checkout infra-repo from app-repro
 - [ ] document on how to add a self-hosted runner for this project
 - [x] inject `API_KEY_*` and `DB_PASSWORD` into deployments
 - [ ] relevant services (VCS, CI/CD, App, Monitoring) accessible via FQDN
