@@ -62,7 +62,7 @@ app:
 .PHONY: deploy-app
 deploy-app:
 	kubectl set image deployment/devops-app -n=$(TARGET_ENV) devops-app=ghcr.io/kelzenberg/devops-app:master
-	kubectl rollout status -n=$(TARGET_ENV) deployment/devops-app
+	kubectl rollout status -n=$(TARGET_ENV) --timeout=15m deployment/devops-app
 
 .PHONY: deploy-app-staging
 deploy-app-staging: TARGET_ENV=staging
