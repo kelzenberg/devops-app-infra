@@ -5,6 +5,7 @@ include .env.runner
 ## Minikube
 
 CERTS_PATH=./src/certificates
+K8S_PATH=./src/.k8s
 
 .PHONY: init
 init: start
@@ -27,6 +28,7 @@ init: start
 start:
 	minikube start --cpus 2 --memory 4g --driver=virtualbox
 	kubectl cluster-info
+	sh $(K8S_PATH)/replace-ip.sh
 
 .PHONY: tunnel
 tunnel:
