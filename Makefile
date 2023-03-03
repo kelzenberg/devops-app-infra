@@ -15,6 +15,11 @@ init: start
 	minikube addons configure ingress
 	minikube addons disable ingress
 	minikube addons enable ingress
+	# Only enable Docker Registry:
+	# Do you want to enable Docker Registry? [y/n]: y
+	# -- Enter docker registry server url: ghcr.io
+	# -- Enter docker registry username: kelzenberg
+	# -- Enter docker registry password: $TOKEN
 	minikube addons configure registry-creds
 	minikube addons enable registry-creds
 
@@ -25,6 +30,7 @@ start:
 
 .PHONY: tunnel
 tunnel:
+	# Enter system user password (if asked for)
 	minikube tunnel
 
 .PHONY: dashboard
