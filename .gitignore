@@ -1,4 +1,6 @@
 src/.github/*
 **/.env.*
+**/*.pem
+
 !**/.env.*.dist
 !**/.gitkeep
