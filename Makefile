@@ -118,18 +118,26 @@ clean-all: clean-staging clean-production
 
 ## GitHub Self-hosted Runner
 
+RUNNER_TOKEN ?= $(error Please provide the generated GitHub token for the runner, either via ".env.runner" file or through "make runner-install RUNNER_TOKEN=foo")
+RUNNER_PATH=./src/.github
+RUNNER_VERSION=2.302.1
+RUNNER_PACKAGE=actions-runner-osx-x64-$(RUNNER_VERSION).tar.gz
+
 .PHONY: runner-install
 runner-install:
-	$ mkdir ./src/.github && cd ./src/.github
-	$ curl -o actions-runner-osx-x64-2.301.1.tar.gz -L https://github.com/actions/runner/releases/download/v2.301.1/actions-runner-osx-x64-2.301.1.tar.gz
-	$ echo "3e0b037ea67e9626e99e6d3ff803ce0d8cc913938ddd1948b3a410ac6a75b878  actions-runner-osx-x64-2.301.1.tar.gz" | shasum -a 256 -c
-	$ tar xzf ./actions-runner-osx-x64-2.301.1.tar.gz
+	@echo "Installing GitHub Actions self-hosted runner..."
+	mkdir -p $(RUNNER_PATH)/runner
+	[ -f $(RUNNER_PATH)/$(RUNNER_PACKAGE) ] && echo "Actions-runner package exists. Skipping download." || curl -o $(RUNNER_PATH)/$(RUNNER_PACKAGE) -L https://github.com/actions/runner/releases/download/v$(RUNNER_VERSION)/$(RUNNER_PACKAGE)
+	echo "cc061fc4ae62afcbfab1e18f1b2a7fc283295ca3459345f31a719d36480a8361  $(RUNNER_PATH)/$(RUNNER_PACKAGE)" | shasum -a 256 -c
+	tar xzf $(RUNNER_PATH)/$(RUNNER_PACKAGE) -C $(RUNNER_PATH)/runner
 
-	# Supply GitHub Token via CLI argument, e.g. `make github-runner-install RUNNER_TOKEN=foo`
-	$ ./config.sh --url https://github.com/kelzenberg/devops-app --token $(RUNNER_TOKEN)
+	@echo "Configuring self-hosted runner with supplied token..."
+	# Enter the name of the runner group to add this runner to: [press Enter for Default] Enter
+	# Enter the name of runner: [press Enter for Steffens-MacBook] DevOps-Steffens-MacBook
+	# Enter any additional labels (ex. label-1,label-2): [press Enter to skip] Enter
+	$(RUNNER_PATH)/runner/config.sh --url https://github.com/kelzenberg/devops-app --token $(RUNNER_TOKEN)
 
 .PHONY: runner-start
 runner-start:
-	$ ./src/.github/run.sh
-	# Use this YAML in your workflow file for each job:
-	# `runs-on: self-hosted`
+	@echo "Starting GitHub Actions self-hosted runner..."
+	$(RUNNER_PATH)/runner/run.sh
