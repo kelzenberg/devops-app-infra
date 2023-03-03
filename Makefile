@@ -1,7 +1,5 @@
 # Makefile to bootstrap local kubernetes
 
-include .env.runner
-
 ## Minikube
 
 CERTS_PATH=./src/certificates
@@ -121,7 +119,7 @@ clean-all: clean-staging clean-production
 
 ## GitHub Self-hosted Runner
 
-RUNNER_TOKEN ?= $(error Please provide the generated GitHub token for the runner, either via ".env.runner" file or through "make runner-install RUNNER_TOKEN=foo")
+RUNNER_TOKEN = $(error Please provide the generated GitHub token for the runner, e.g "make runner-install RUNNER_TOKEN=foo")
 RUNNER_PATH=./src/.github
 RUNNER_VERSION=2.302.1
 RUNNER_PACKAGE=actions-runner-osx-x64-$(RUNNER_VERSION).tar.gz
