@@ -228,3 +228,13 @@ make start
 
    Run `minikube ip` to get the cluster IP and insert it in the URLs above.  
    Example: [`https://dev.192.168.59.105.nip.io`](https://dev.192.168.59.105.nip.io)
+
+#### Additional Makefile commands
+
+If some Kubernetes resources need to be removed again, there are a few make targets available to do so:
+
+- `clean-staging` removes all resources in `staging` namespace
+- `clean-production` removes all resources in `production` namespace
+- `clean-all` does both of the above AND removes the namespaces and certificates
+
+The `make deploy-app-staging` and `make deploy-app-production` targets are only being used in the deploy-workflow which the GitHub self-hosted runner is executing.
