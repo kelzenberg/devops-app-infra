@@ -55,8 +55,17 @@ Every command in here is being run from the repo-root path.
   - **Workflow permissions:** _Read and write permissions_
     - ☑️ _Allow GitHub Actions to create and approve pull requests_
 - Add a **New repository secret** in your Action secrets in your app repository (here [devops-app](https://github.com/kelzenberg/devops-app/settings/secrets/actions)) under **Settings/Secrets and variables/Actions** with:
+
   - **Name:** `INFRA_REPO_TOKEN`
   - **Secrets:** Pass in the value of the `GitHub Actions - Read private Repos` **Token** from earlier
+
+- Copy both **.env** files
+
+  - `cp .env.app.dist .env.app` and
+  - `cp .env.db.dist .env.db`
+
+  and replace the empty string with secret values on your non-dist copy.  
+  They need to be present during the Minikub setup.
 
 ## GitHub Self-hosted Runner
 
