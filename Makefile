@@ -40,10 +40,11 @@ dashboard:
 
 ## Kubernetes
 
-setup: staging production
-
 ENVS = production staging
 TARGET_ENV = default
+DB_CONFIG_PATH=./src/.k8s/database
+APP_CONFIG_PATH=./src/.k8s/app
+CONTROLLER_CONFIG_PATH=./src/.k8s/controller
 
 .PHONY: $(ENVS)
 $(ENVS): TARGET_ENV=$(MAKECMDGOALS)
@@ -51,31 +52,33 @@ $(ENVS): namespace database app
 
 .PHONY: namespace
 namespace:
+	@echo "Setting up $@ for $(TARGET_ENV) environment..."
 	kubectl apply -f ./src/.k8s/namespaces/$(TARGET_ENV).yaml
 
 .PHONY: database
 database:
-	echo "Setting up $@ for $(TARGET_ENV)..."
+	@echo "Setting up $@ for $(TARGET_ENV) environment..."
 	kubectl create secret generic database-secret --from-env-file=.env.db --namespace=$(TARGET_ENV)
-	kubectl apply -f ./src/.k8s/database/db.pvc.yaml --namespace=$(TARGET_ENV)
-	kubectl apply -f ./src/.k8s/database/db.config.yaml --namespace=$(TARGET_ENV)
-	kubectl apply -f ./src/.k8s/database/db.deployment.yaml --namespace=$(TARGET_ENV)
-	kubectl apply -f ./src/.k8s/database/db.service.yaml --namespace=$(TARGET_ENV)
-	kubectl apply -f ./src/.k8s/controller/db.load-balancer.yaml --namespace=$(TARGET_ENV)
+	kubectl apply -f $(DB_CONFIG_PATH)/db.pvc.yaml --namespace=$(TARGET_ENV)
+	kubectl apply -f $(DB_CONFIG_PATH)/db.config.yaml --namespace=$(TARGET_ENV)
+	kubectl apply -f $(DB_CONFIG_PATH)/db.deployment.yaml --namespace=$(TARGET_ENV)
+	kubectl apply -f $(DB_CONFIG_PATH)/db.service.yaml --namespace=$(TARGET_ENV)
+	kubectl apply -f $(CONTROLLER_CONFIG_PATH)/db.load-balancer.yaml --namespace=$(TARGET_ENV)
 
 .PHONY: app
 app:
-	echo "Setting up $@ for $(TARGET_ENV)..."
+	@echo "Setting up $@ for $(TARGET_ENV) environment..."
 	kubectl create secret generic app-secret --from-env-file=.env.app --namespace=$(TARGET_ENV)
-	kubectl apply -f ./src/.k8s/app/app.config.yaml --namespace=$(TARGET_ENV)
-	kubectl apply -f ./src/.k8s/app/app.deployment.yaml --namespace=$(TARGET_ENV)
-	kubectl apply -f ./src/.k8s/app/app.service.yaml --namespace=$(TARGET_ENV)
-	kubectl apply -f ./src/.k8s/controller/$(TARGET_ENV).ingress.yaml --namespace=$(TARGET_ENV)
+	kubectl apply -f $(APP_CONFIG_PATH)/app.config.yaml --namespace=$(TARGET_ENV)
+	kubectl apply -f $(APP_CONFIG_PATH)/app.deployment.yaml --namespace=$(TARGET_ENV)
+	kubectl apply -f $(APP_CONFIG_PATH)/app.service.yaml --namespace=$(TARGET_ENV)
+	kubectl apply -f $(CONTROLLER_CONFIG_PATH)/$(TARGET_ENV).ingress.yaml --namespace=$(TARGET_ENV)
 
 ### Deploy
 
 .PHONY: deploy-app
 deploy-app:
+	@echo "Running $@ for $(TARGET_ENV) environment..."
 	kubectl set image deployment/devops-app -n=$(TARGET_ENV) devops-app=ghcr.io/kelzenberg/devops-app:master
 	kubectl rollout status -n=$(TARGET_ENV) --timeout=15m deployment/devops-app
 
@@ -91,6 +94,7 @@ deploy-app-production: deploy-app
 
 .PHONY: clean
 clean:
+	@echo "Deleting every resource in $(TARGET_ENV) environment..."
 	kubectl delete deployments --namespace=$(TARGET_ENV) --all
 	kubectl delete services --namespace=$(TARGET_ENV) --all
 	kubectl delete pods --namespace=$(TARGET_ENV) --all
