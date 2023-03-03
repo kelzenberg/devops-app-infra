@@ -29,6 +29,7 @@ Every command in here is being run from the repo-root path.
 - **Development Certificates**: [mkcert v1.4.4](https://github.com/FiloSottile/mkcert)
   ```sh
   brew install mkcert
+  mkcert -install
   ```
 - **YAML processor**: [yq v4.31.2](https://github.com/mikefarah/yq)
   ```sh
