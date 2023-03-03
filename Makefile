@@ -2,9 +2,16 @@
 
 ## Minikube
 
+CERTS_PATH=./src/certificates
+
 .PHONY: init
 init: start
 	minikube addons enable metrics-server
+	sh $(CERTS_PATH)/generate-certs.sh
+	kubectl -n kube-system create secret tls mkcert --key $(CERTS_PATH)/key.pem --cert $(CERTS_PATH)/cert.pem
+	# -- Enter custom cert(format is "namespace/secret"): kube-system/mkcert
+	minikube addons configure ingress
+	minikube addons disable ingress
 	minikube addons enable ingress
 	minikube addons configure registry-creds
 	minikube addons enable registry-creds
