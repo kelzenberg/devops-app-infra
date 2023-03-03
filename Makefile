@@ -116,6 +116,7 @@ clean-production: clean
 
 .PHONY: clean-all
 clean-all: clean-staging clean-production
+	kubectl delete secret -n kube-system mkcert
 	kubectl delete namespaces $(ENVS)
 
 ## GitHub Self-hosted Runner
