@@ -136,9 +136,6 @@ runner-install:
 	tar xzf $(RUNNER_PATH)/$(RUNNER_PACKAGE) -C $(RUNNER_PATH)/runner
 
 	@echo "Configuring self-hosted runner with supplied token..."
-	# Enter the name of the runner group to add this runner to: [press Enter for Default] Enter
-	# Enter the name of runner: [press Enter for Steffens-MacBook] DevOps-Steffens-MacBook
-	# Enter any additional labels (ex. label-1,label-2): [press Enter to skip] Enter
 	$(RUNNER_PATH)/runner/config.sh --url https://github.com/kelzenberg/devops-app --token $(RUNNER_TOKEN)
 
 .PHONY: runner-remove
