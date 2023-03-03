@@ -10,15 +10,10 @@ init: start
 	minikube addons enable metrics-server
 	sh $(CERTS_PATH)/generate-certs.sh
 	kubectl -n kube-system create secret tls mkcert --key $(CERTS_PATH)/key.pem --cert $(CERTS_PATH)/cert.pem
-	# -- Enter custom cert(format is "namespace/secret"): kube-system/mkcert
+	# Custom cert(format is "namespace/secret") is: "kube-system/mkcert"
 	minikube addons configure ingress
 	minikube addons disable ingress
 	minikube addons enable ingress
-	# Only enable Docker Registry:
-	# Do you want to enable Docker Registry? [y/n]: y
-	# -- Enter docker registry server url: ghcr.io
-	# -- Enter docker registry username: kelzenberg
-	# -- Enter docker registry password: $TOKEN
 	minikube addons configure registry-creds
 	minikube addons enable registry-creds
 
