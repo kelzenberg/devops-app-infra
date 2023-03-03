@@ -116,3 +116,114 @@ Restart the procedure with `make runner-remove` and `make runner-install` if som
 
 **_In a separate terminal_** start the runner with `make runner-start`.  
 Keep the terminal open as long as desired.
+
+## Minikube
+
+In this example, Minikube sets up a local Kubernetes cluster via the installed VirtualBox driver. Other drivers like `docker` are available. This repository focusses on the default `virtualbox` driver though.
+
+### Initialization
+
+> Only required to do ONCE!
+
+**Note:** It might be troublesome to run Container or VM Managers in parallel to Minikube via VirtualBox. It is advised to shutdown those other managers when working with Minikube.
+
+1. Init Minikube with:
+   ```sh
+   make init
+   ```
+2. During the injections of certificates,  
+   input of `kube-system/mkcert` is needed, like so:
+
+   ```sh
+   $ minikube addons configure ingress
+   -- Enter custom cert (format is "namespace/secret"): kube-system/mkcert
+   # kube-system/mkcert
+
+   # Optional, in case of a re-init:
+   A custom cert for ingress has already been set. Do you want overwrite it? [y/n]: y
+   # y
+   ```
+
+3. During the registration with Container Registries, there are a couple of questions which registry should be enabled.  
+   **ONLY enable the Docker registry**, like so:
+
+   ```sh
+     Do you want to enable AWS Elastic Container Registry? [y/n]: n
+     # n
+     Do you want to enable Google Container Registry? [y/n]: n
+     # n
+     Do you want to enable Docker Registry? [y/n]: y
+     # y
+     -- Enter docker registry server url: ghcr.io
+     # ghcr.io
+     -- Enter docker registry username: kelzenberg
+     # kelzenberg
+     -- Enter docker registry password:
+     # "Minikube - ghcr.io Registry Access" token value
+     Do you want to enable Azure Container Registry? [y/n]: n
+     # n
+   ```
+
+   For the _docker registry password_ pass in the value of the `Minikube - ghcr.io Registry Access` **Token** from earlier.
+
+4. Minikube is now configured and running.  
+   Confirm it with:
+
+   ```sh
+   $ minikube status && kubectl cluster-info
+    minikube
+    type: Control Plane
+    host: Running
+    kubelet: Running
+    apiserver: Running
+    kubeconfig: Configured
+
+    Kubernetes control plane is running at https://192.168.59.105:8443
+    CoreDNS is running at https://192.168.59.105:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+   ```
+
+### Setting K8s cluster up
+
+(Optional) If Minikube was not yet started...
+
+```sh
+make start
+```
+
+#### Monitoring & Tunneling
+
+- **_In a separate terminal_** start the Minikube tunnel with `make tunnel` and enter the system user _password_ if asked. This allows the host system to access Kubernetes' services.
+
+  Keep the terminal open as long as access to the cluster resources is needed (e.g. resolving FQDNs via browser or deploying via GitHub runner).
+
+- **_In another separate terminal_** start the Minikube dashboard with `make dashboard` and wait until a website opens. On the top left, select a namespace to monitor.
+
+  Keep the terminal open as long as desired.
+
+- (Optional) If `K9s` is installed the cluster can be inspected via a Terminal-GUI with more interactive options than the Kubernetes dashboard.
+
+#### Preparation for Continous Deployment
+
+1. Before the runner CD-workflows can rollout new images to the local K8s cluster, we need to apply our config files once for both environments (`staging` and `production`) with:
+
+   ```sh
+   make staging
+   ```
+
+   and
+
+   ```sh
+   make production
+   ```
+
+   **Note:** Depending on the local internet speed Kubernetes will take some time to download and deploy all necessary images.
+
+   If `ErrImagePull` or `ImagePullBackOff` errors appear within the pods, it could mean that the `Minikube - ghcr.io Registry Access` token was passed incorrectly in earlier or the GitHub Container Registry (ghcr.io) reached the allowed pull-limits for the registered account (step Initialization.3 ).
+
+2. If the minikube tunnel is running, the deployed [devops-app](https://github.com/kelzenberg/devops-app) can be reached via its own FQDNs:
+
+   - **Staging**: `https://dev.${minikube-ip}.nip.io`
+   - **Production**: `https://app.${minikube-ip}.nip.io`
+
+   Run `minikube ip` to get the cluster IP and insert it in the URLs above.  
+   Example: [`https://dev.192.168.59.105.nip.io`](https://dev.192.168.59.105.nip.io)
