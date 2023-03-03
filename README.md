@@ -18,7 +18,7 @@ Every command in here is being run from the repo-root path.
   # `brew install --cask virtualbox@v6.1.42` is unavailable via brew.
   # Either run a previous version of the cask file or download v6.1.42 manually.
   ```
-- **Kubernets Command Line Tool**: [kubectl v1.25.4](https://kubernetes.io/docs/tasks/tools/)
+- **Kubernetes Command Line Tool**: [kubectl v1.25.4](https://kubernetes.io/docs/tasks/tools/)
   ```sh
   brew install kubectl
   ```
@@ -41,7 +41,7 @@ Every command in here is being run from the repo-root path.
 
 ### Secrets, Tokens & more
 
-> Only required to do ONCE!
+> Only required to do once!
 
 - Add a Personal Access Token (classic) called `Minikube - ghcr.io Registry Access` in [GitHub settings](https://github.com/settings/tokens) with permissions to:  
   ☑️ `read:packages` _Download packages from GitHub Package Registry_
@@ -59,12 +59,12 @@ Every command in here is being run from the repo-root path.
 
 ## GitHub Self-hosted Runner
 
-The self-hosted runners is executing workflows locally where you install it.  
+The self-hosted runner is executing workflows locally wherever you install it.  
 In this example, the workflows executing on the local runner are targeting the Minikube Kubernetes cluster on the same machine.
 
 ### Install the Runner
 
-> Only required to do ONCE!
+> Only required to do once!
 
 1. Add a **New self-hosted runner** in your app repository (here [devops-app](https://github.com/kelzenberg/devops-app/settings/actions/runners)) under **Settings/Actions/Runners**
 2. Choose `Runner image` and `Architecture`
@@ -75,7 +75,7 @@ In this example, the workflows executing on the local runner are targeting the M
    ```
    - Remove the `v`
    - Write down the version (here `2.302.1`), we'll need it later
-4. Copy the has after the `echo` in the `Download` section:
+4. Copy the hash after the `echo` in the `Download` section:
    ```sh
    echo "cc061fc4ae62afcbfab1e18f1b2a7fc283295ca3459345f31a719d36480a8361  actions-runner-osx-x64-2.302.1.tar.gz" | shasum -a 256 -c
    # cc061fc4ae62afcbfab1e18f1b2a7fc283295ca3459345f31a719d36480a8361
@@ -95,7 +95,7 @@ In this example, the workflows executing on the local runner are targeting the M
 
 ### Configure the Runner
 
-> Only required to do ONCE!
+> Only required to do once!
 
 Follow the configurator like this:
 
@@ -120,13 +120,13 @@ Keep the terminal open as long as desired.
 
 ## Minikube
 
-In this example, Minikube sets up a local Kubernetes cluster via the installed VirtualBox driver. Other drivers like `docker` are available. This repository focusses on the default `virtualbox` driver though.
+In this example, Minikube sets up a local Kubernetes cluster via the installed VirtualBox driver. Other drivers like `docker` are available. This repository focuses on the default `virtualbox` driver though.
 
 ### Initialization
 
-> Only required to do ONCE!
+> Only required to do once!
 
-**Note:** It might be troublesome to run Container or VM Managers in parallel to Minikube via VirtualBox. It is advised to shutdown those other managers when working with Minikube.
+**Note:** It might be troublesome to run Container or VM Managers (e.g. Docker Desktop) in parallel to Minikube via VirtualBox. It is advised to shutdown those other managers when working with Minikube.
 
 1. Init Minikube with:
    ```sh
@@ -145,7 +145,7 @@ In this example, Minikube sets up a local Kubernetes cluster via the installed V
    # y
    ```
 
-3. During the registration with Container Registries, there are a couple of questions which registry should be enabled.  
+3. During the registration with Container Registries, there are a couple of questions which registries should be enabled.  
    **ONLY enable the Docker registry**, like so:
 
    ```sh
@@ -238,3 +238,15 @@ If some Kubernetes resources need to be removed again, there are a few make targ
 - `clean-all` does both of the above AND removes the namespaces and certificates
 
 The `make deploy-app-staging` and `make deploy-app-production` targets are only being used in the deploy-workflow which the GitHub self-hosted runner is executing.
+
+### Deploying new images
+
+If everything is set up, the GitHub workflows in the [devops-app repository](https://github.com/kelzenberg/devops-app/tree/master/.github/workflows) should be able to deploy to the local Kubernetes cluster.
+
+#### Requirements for a successful deployment
+
+- Internet connection on the local machine
+- Minikube is running
+- Minikube tunnel is running
+- Kubernetes cluster is running
+- GitHub self-hosted runner is running
