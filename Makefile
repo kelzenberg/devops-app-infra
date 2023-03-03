@@ -125,13 +125,14 @@ RUNNER_TOKEN = $(error Please provide the generated GitHub token for the runner,
 RUNNER_PATH=./src/.github
 RUNNER_VERSION=2.302.1
 RUNNER_PACKAGE=actions-runner-osx-x64-$(RUNNER_VERSION).tar.gz
+RUNNER_HASH=cc061fc4ae62afcbfab1e18f1b2a7fc283295ca3459345f31a719d36480a8361
 
 .PHONY: runner-install
 runner-install:
 	@echo "Installing GitHub Actions self-hosted runner..."
 	mkdir -p $(RUNNER_PATH)/runner
 	[ -f $(RUNNER_PATH)/$(RUNNER_PACKAGE) ] && echo "Actions-runner package exists. Skipping download." || curl -o $(RUNNER_PATH)/$(RUNNER_PACKAGE) -L https://github.com/actions/runner/releases/download/v$(RUNNER_VERSION)/$(RUNNER_PACKAGE)
-	echo "cc061fc4ae62afcbfab1e18f1b2a7fc283295ca3459345f31a719d36480a8361  $(RUNNER_PATH)/$(RUNNER_PACKAGE)" | shasum -a 256 -c
+	echo "$(RUNNER_HASH)  $(RUNNER_PATH)/$(RUNNER_PACKAGE)" | shasum -a 256 -c
 	tar xzf $(RUNNER_PATH)/$(RUNNER_PACKAGE) -C $(RUNNER_PATH)/runner
 
 	@echo "Configuring self-hosted runner with supplied token..."
@@ -139,6 +140,11 @@ runner-install:
 	# Enter the name of runner: [press Enter for Steffens-MacBook] DevOps-Steffens-MacBook
 	# Enter any additional labels (ex. label-1,label-2): [press Enter to skip] Enter
 	$(RUNNER_PATH)/runner/config.sh --url https://github.com/kelzenberg/devops-app --token $(RUNNER_TOKEN)
+
+.PHONY: runner-remove
+runner-remove:
+	@echo "Removing GitHub Actions self-hosted runner..."
+	rm -rf $(RUNNER_PATH)/runner
 
 .PHONY: runner-start
 runner-start:
