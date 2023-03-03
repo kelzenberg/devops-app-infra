@@ -1,5 +1,7 @@
 # Makefile to bootstrap local kubernetes
 
+include .env.runner
+
 ## Minikube
 
 CERTS_PATH=./src/certificates
