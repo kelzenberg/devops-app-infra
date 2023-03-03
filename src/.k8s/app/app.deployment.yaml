@@ -44,7 +44,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.namespace
         - name: database-migration
-          image: ghcr.io/kelzenberg/devops-app:master
+          image: ghcr.io/kelzenberg/devops-app:latest
           imagePullPolicy: Always
           command: [/flyway/flyway]
           args:
@@ -75,7 +75,7 @@ spec:
               memory: 128M
       containers:
         - name: devops-app
-          image: ghcr.io/kelzenberg/devops-app:master
+          image: ghcr.io/kelzenberg/devops-app:latest
           imagePullPolicy: Always
           command: [node]
           args: ["dist/index.js"]

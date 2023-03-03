@@ -79,14 +79,16 @@ app:
 .PHONY: deploy-app
 deploy-app:
 	@echo "Running $@ for $(TARGET_ENV) environment..."
-	kubectl set image deployment/devops-app -n=$(TARGET_ENV) devops-app=ghcr.io/kelzenberg/devops-app:master
+	kubectl set image deployment/devops-app -n=$(TARGET_ENV) devops-app=ghcr.io/kelzenberg/devops-app:${TAG}
 	kubectl rollout status -n=$(TARGET_ENV) --timeout=15m deployment/devops-app
 
 .PHONY: deploy-app-staging
+deploy-app-staging: TAG=latest
 deploy-app-staging: TARGET_ENV=staging
 deploy-app-staging: deploy-app
 
 .PHONY: deploy-app-production
+deploy-app-production: TAG=latest
 deploy-app-production: TARGET_ENV=production
 deploy-app-production: deploy-app
 
