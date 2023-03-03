@@ -4,8 +4,8 @@ Work in progress tasks & To-Do's
 
 - [x] setup repositories ([app](https://github.com/kelzenberg/devops-app) & [infra](https://github.com/kelzenberg/devops-app-infra))
 - [x] setup Minikube & components
-- [ ] _**WIP**_ create Makefile to bootstrap local k8s
-- [ ] _**WIP**_ configure Minikube's k8s via config yaml files
+- [x] create Makefile to bootstrap local k8s
+- [x] configure Minikube's k8s via config yaml files
 - [ ] ~~configure `minikube ip` IPs to be static on host & use in ingress etc.~~
   - Static IPs for Minikube are only possible with the docker driver
   - Minikube remains its IP address with Virtualbox driver between sessions though
@@ -26,16 +26,18 @@ Work in progress tasks & To-Do's
 - [x] at least one service (e.g. VCS, Monitoring) other than the app has to be provisioned by yourself  
   - --> Database
 - [x] register Github self-hosted runner
+  - [ ] document on how to add a self-hosted runner for this project (RUNNER_TOKEN)
   - [ ] describe requirements for GH runner (e.g. `kubectl` installed)
   - [ ] describe CI-INFRA_REPO_TOKEN secret to checkout infra-repo from app-repro
-- [ ] document on how to add a self-hosted runner for this project
 - [x] inject `API_KEY_*` and `DB_PASSWORD` into deployments
-- [ ] relevant services (VCS, CI/CD, App, Monitoring) accessible via FQDN
+- [x] relevant services (VCS, CI/CD, App, Monitoring) accessible via FQDN
   - [x] VCS
   - [x] CI/CD
   - [x] Devops app
-  - [ ] monitoring?
-- [ ] exposed services served via HTTPS (self-signed -> k8s secrets -> ingress)
+  - [ ] ~~Monitoring~~
+- [x] exposed services served via HTTPS (self-signed)
+  - [ ] document `brew install mkcert` as requirement
+  - [ ] document `mkcert -install` as requirement
 - [x] application must run 100% redundant (replica: 2+)
 - [x] zero-downtime deployment strategy
   - [x] add rolling-update policy, configurable in `kind: deployment`
