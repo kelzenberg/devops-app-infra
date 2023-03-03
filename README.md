@@ -6,7 +6,8 @@ For the concept of this infrastructure, see [Concept.md](./Concept.md).
 
 ## Prerequisites
 
-**Clone this repository** and follow the steps below.
+**Clone this repository** and follow the steps below.  
+Every command in here is being run from the repo-root path.
 
 ### Required Software
 
@@ -61,7 +62,7 @@ For the concept of this infrastructure, see [Concept.md](./Concept.md).
 The self-hosted runners is executing workflows locally where you install it.  
 In this example, the workflows executing on the local runner are targeting the Minikube Kubernetes cluster on the same machine.
 
-### Install
+### Install the Runner
 
 > Only required to do ONCE!
 
@@ -86,13 +87,13 @@ In this example, the workflows executing on the local runner are targeting the M
    # HELLOIAMASECRETTOKENFORRUNNERS
    ```
    - Store the token securely, we'll need it later
-6. Run the Makefile with the runner **Version**, **Hash** and **Token** from before
+6. Run this make command with `Version`, `Hash` and `Token` from before to install the runner
    ```sh
    make runner-install RUNNER_VERSION=2.302.1  RUNNER_HASH=cc061fc4ae62afcbfab1e18f1b2a7fc283295ca3459345f31a719d36480a8361 RUNNER_TOKEN=HELLOIAMASECRETTOKENFORRUNNERS
    ```
 7. It should download the required files and start the self-hosted runner configurator.
 
-### Configure
+### Configure the Runner
 
 > Only required to do ONCE!
 
